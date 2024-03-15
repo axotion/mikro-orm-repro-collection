@@ -10,11 +10,11 @@ export const mikroOrmConfigFactory = (
   const dbLogger = new Logger('MikroORM');
   return defineConfig({
     entities: [],
-    host: configService.get('KONE_ACCESS_ADAPTER_DB_HOST'),
-    dbName: configService.get('KONE_ACCESS_ADAPTER_DB_NAME'),
-    user: configService.get('KONE_ACCESS_ADAPTER_DB_USER'),
-    password: configService.get('KONE_ACCESS_ADAPTER_DB_PASSWORD'),
-    port: configService.get('KONE_ACCESS_ADAPTER_DB_PORT'),
+    host: configService.get('DB_HOST'),
+    dbName: configService.get('DB_NAME'),
+    user: configService.get('DB_USER'),
+    password: configService.get('DB_PASSWORD'),
+    port: configService.get('DB_PORT'),
     logger: dbLogger.log.bind(dbLogger),
     debug: true,
     migrations: migrationsOptions,
