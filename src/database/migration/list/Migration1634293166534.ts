@@ -8,7 +8,7 @@ export class Migration1634293166534 extends Migration {
       knex.schema
         .createTable('owner', (tableBuilder) => {
           tableBuilder.increments().primary();
-          tableBuilder.string('name');
+          tableBuilder.string('name').notNullable();
         })
         .toQuery(),
     );
