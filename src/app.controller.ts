@@ -1,12 +1,24 @@
+import { EntityRepository } from "@mikro-orm/mysql";
+import { InjectRepository } from "@mikro-orm/nestjs";
 import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+import { Owner } from "./database/model/owner.model";
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(
+    @InjectRepository(Owner)
+    private readonly ownerRepository: EntityRepository<Owner>,
+  ) {}
 
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  async getOwnersWithoutPets(): Promise<Owner[]> {
+    return this.ownerRepository.find({
+      dogs: {
+        $none: {}
+      },
+      cats: {
+        $none: {}
+      }
+    });
   }
 }
