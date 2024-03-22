@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  database:
+    image: mysql:8.0.26
+    platform: linux/amd64
+    volumes:
+      - db_data:/var/lib/data
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: user
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user
+    ports:
+      - 33067:3306
+  app:
+    entrypoint: [ 'nest', 'start', '--debug', '0.0.0.0:9229', '--watch' ]
+    build:
+      context: .
+    ports:
+      - 3000:3000
+      - 9229:9229
+      - 8000:8000
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    restart: unless-stopped
+    depends_on:
+      - database
+    environment:
+      NODE_ENV: local
+      DB_HOST: database
+      DB_NAME: user
+      DB_USER: user
+      DB_PASSWORD: user
+      DB_PORT: 3306
+      PORT: 3000
+volumes:
+  db_data: { }

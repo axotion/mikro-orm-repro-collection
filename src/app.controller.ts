@@ -1,7 +1,7 @@
-import { EntityRepository } from "@mikro-orm/mysql";
-import { InjectRepository } from "@mikro-orm/nestjs";
+import { EntityRepository } from '@mikro-orm/mysql';
+import { InjectRepository } from '@mikro-orm/nestjs';
 import { Controller, Get } from '@nestjs/common';
-import { Owner } from "./database/model/owner.model";
+import { Owner } from './database/model/owner.model';
 
 @Controller()
 export class AppController {
@@ -14,11 +14,11 @@ export class AppController {
   async getOwnersWithoutPets(): Promise<Owner[]> {
     return this.ownerRepository.find({
       dogs: {
-        $none: {}
+        $none: {},
       },
       cats: {
-        $none: {}
-      }
+        $none: {},
+      },
     });
   }
 }
